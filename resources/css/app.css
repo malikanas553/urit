@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Brand palette sampled from the reference design */
+    --color-brand-50: #eaf7f6;
+    --color-brand-100: #d2efed;
+    --color-brand-300: #6fd0c9;
+    --color-brand-400: #3fbcb5;
+    --color-brand-500: #26a7a1;
+    --color-brand-600: #1d8f8a;
+    --color-brand-700: #177574;
+    --color-brand-800: #125e5f;
+    --color-brand-900: #0e4a4d;
+    --color-brand-950: #0a393c;
+
+    --color-lime: #c9f23c;
+    --color-lime-dark: #b4dc26;
+
+    --color-ink: #121414;
+    --color-ink-soft: #1c1e1f;
+    --color-muted: #8a9099;
+    --color-line: #ececec;
+
+    --shadow-card: 0 24px 60px -24px rgb(16 40 40 / 0.18);
+    --shadow-float: 0 18px 40px -12px rgb(0 0 0 / 0.25);
+
+    --radius-4xl: 2rem;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-white font-sans text-ink antialiased;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-brand-500);
+        outline-offset: 3px;
+    }
+
+    .on-dark :focus-visible {
+        outline-color: var(--color-lime);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+        }
+    }
+}
+
+@layer components {
+    .container-page {
+        @apply mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10 xl:px-5;
+    }
+
+    /* Hero / banner teal gradient with a faint square grid */
+    .bg-hero {
+        background-color: var(--color-brand-600);
+        background-image:
+            linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+            radial-gradient(120% 90% at 70% 10%, var(--color-brand-400) 0%, var(--color-brand-600) 45%, var(--color-brand-800) 100%);
+        background-size: 56px 56px, 56px 56px, 100% 100%;
+    }
+
+    /* Frosted card floating over imagery */
+    .glass {
+        background: rgb(255 255 255 / 0.16);
+        border: 1px solid rgb(255 255 255 / 0.28);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+    /* Topographic-ish soft pattern used behind portrait cards */
+    .bg-swirl {
+        background-color: var(--color-brand-400);
+        background-image:
+            repeating-radial-gradient(circle at 30% 20%, rgb(255 255 255 / 0.07) 0 2px, transparent 2px 22px),
+            linear-gradient(160deg, var(--color-brand-300), var(--color-brand-500));
+    }
+
+    .testimonial-track {
+        transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+}
