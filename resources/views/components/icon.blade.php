@@ -47,20 +47,32 @@
             <rect x="3" y="3" width="18" height="18" rx="3.5" fill="currentColor" stroke="none" opacity=".55"/>
             <path d="M7 15.5 8.5 9l1.5 6.5M7.4 13.5h2.2M12 15.5V9h1.6a1.7 1.7 0 0 1 0 3.4H12M17 9v6.5" stroke="#fff" stroke-width="1.5"/>
             @break
+        {{-- Two-tone feature icons (light body + currentColor accents), drawn after the reference --}}
         @case('investors')
-            <path d="M12 2.5 4 6v5.5c0 4.6 3.4 8.6 8 10 4.6-1.4 8-5.4 8-10V6l-8-3.5Z" fill="currentColor" stroke="none" opacity=".3"/>
-            <path d="M14.4 9.2c-.4-.8-1.3-1.2-2.4-1.2-1.4 0-2.4.7-2.4 1.8 0 2.6 5 1.4 5 4.1 0 1.1-1.1 1.9-2.6 1.9-1.2 0-2.2-.5-2.6-1.4M12 6.8v1.2m0 7.9v1.3"/>
+            <path d="M8.6 7.2V5.4a1.6 1.6 0 0 1 1.6-1.6h3.6a1.6 1.6 0 0 1 1.6 1.6v1.8" stroke-width="1.7"/>
+            <rect x="2.6" y="7" width="18.8" height="14" rx="3.4" fill="#98d9de" stroke="none"/>
+            <path d="M14 11.6c-.3-.7-1-1.1-2-1.1-1.2 0-2 .6-2 1.5 0 2.2 4.1 1.1 4.1 3.4 0 .9-.9 1.6-2.2 1.6-1 0-1.8-.4-2.1-1.2M12 9.3v1.2m0 6.6v1.2" stroke-width="1.6"/>
             @break
         @case('lender')
-            <path d="M4 9a8 8 0 0 1 14-3.5L20 7.5" />
-            <path d="M20 3.5v4h-4"/>
-            <path d="M20 15a8 8 0 0 1-14 3.5L4 16.5"/>
-            <path d="M4 20.5v-4h4"/>
-            <circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/>
+            <path d="M12 2.4 9.7 3.6H7.4l.6 2.4L7.4 8.4h2.3L12 9.6l2.3-1.2h2.3L16 6l.6-2.4h-2.3L12 2.4Z" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="6" r="1.1" fill="#fff" stroke="none"/>
+            <path d="M5.6 4.2 4.4 5.4M18.4 4.2l1.2 1.2M5.6 7.8 4.4 6.6M18.4 7.8l1.2-1.2" stroke-width="1.6"/>
+            <path d="M2 15.4c0-.9.7-1.6 1.6-1.6h6.2c1 0 1.9.3 2.6.9l.8.6h3.3c.9 0 1.6.6 1.6 1.5l2.5-1.3c.9-.5 2.1-.2 2.6.7.3.5.1 1.2-.4 1.5l-5.1 3.2c-.8.5-1.7.7-2.6.7H3.6c-.9 0-1.6-.7-1.6-1.6v-4.6Z" fill="#98d9de" stroke="none"/>
             @break
         @case('proptech')
-            <path d="M5 3h10l4 4v14H5V3Z" fill="currentColor" stroke="none" opacity=".3"/>
-            <path d="M15 3v4h4M8.5 12h7M8.5 15.5h5"/>
+            <path d="M6.4 2.6h8.2l6 6v9.6a3.2 3.2 0 0 1-3.2 3.2H6.4a3.2 3.2 0 0 1-3.2-3.2V5.8a3.2 3.2 0 0 1 3.2-3.2Z" fill="#98d9de" stroke="none"/>
+            <path d="M14.6 2.6v3.8a2.2 2.2 0 0 0 2.2 2.2h3.8l-6-6Z" fill="currentColor" stroke="none"/>
+            <path d="m9.4 12.6-1.8 1.8 1.8 1.8m5.2-3.6 1.8 1.8-1.8 1.8m-1.8-4.4-1.6 5.2" stroke-width="1.5"/>
+            @break
+        @case('wallet')
+            <path d="M5 8.2A2.2 2.2 0 0 1 7.2 6h9.6A2.2 2.2 0 0 1 19 8.2v8.6a2.2 2.2 0 0 1-2.2 2.2H7.2A2.2 2.2 0 0 1 5 16.8V8.2Z" fill="currentColor" stroke="none"/>
+            <path d="M8 6 9.6 4.3a1.4 1.4 0 0 1 2 0L13.4 6" fill="currentColor" stroke="none"/>
+            <path d="M5 10.3h2.6a2.2 2.2 0 0 1 0 4.4H5" stroke="#202020" stroke-width="1.4"/>
+            <circle cx="7.6" cy="12.5" r=".8" fill="#202020" stroke="none"/>
+            <path d="M14 9.2h2.6" stroke="#202020" stroke-width="1.4"/>
+            @break
+        @case('plus-minus')
+            <path d="M5 8.5h4.6M7.3 6.2v4.6M16.2 5.6 8.3 18.4M14.4 15.6h4.6" stroke-width="2"/>
             @break
         @case('divide')
             <path d="M6 12h12"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/>

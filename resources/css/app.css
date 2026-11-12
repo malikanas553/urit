@@ -63,7 +63,7 @@
     }
 
     body {
-        @apply bg-white font-sans text-ink antialiased;
+        @apply bg-[#fafafa] font-sans text-ink antialiased;  /* page background from the design */
     }
 
     :focus-visible {
