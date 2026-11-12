@@ -50,11 +50,20 @@
                 </div>
             </div>
 
-            {{-- Integration icons (generic stand-ins for the tool logos in the design) --}}
-            <ul class="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-5 rounded-full bg-white px-7 py-4 shadow-card" aria-label="Works with your tools">
-                <li class="text-[#e01e5a]"><x-icon name="grid" class="size-6" /><span class="sr-only">Messaging</span></li>
-                <li class="text-[#0c66e4]"><x-icon name="board" class="size-6" /><span class="sr-only">Project boards</span></li>
-                <li class="text-[#f06a6a]"><x-icon name="dots" class="size-6" /><span class="sr-only">Task management</span></li>
+            {{-- Integration logos (from thesvg.org): white pill holding one white circle per logo --}}
+            @php
+                $tools = [
+                    ['file' => 'slack.svg', 'name' => 'Slack'],
+                    ['file' => 'trello.svg', 'name' => 'Trello'],
+                    ['file' => 'asana.svg', 'name' => 'Asana'],
+                ];
+            @endphp
+            <ul class="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full bg-white p-2.5 shadow-card" aria-label="Works with your tools">
+                @foreach ($tools as $tool)
+                    <li class="grid size-16 place-items-center rounded-full bg-white shadow-soft">
+                        <img src="{{ asset('images/logos/'.$tool['file']) }}" alt="{{ $tool['name'] }}" width="28" height="28" class="size-7 object-contain">
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>

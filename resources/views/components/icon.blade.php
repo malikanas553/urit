@@ -80,6 +80,11 @@
         @case('wallet')
             <rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/><path d="M6 6 15 3l1 3"/>
             @break
+        @case('money-bag')
+            <path d="M9 4.5h6l-1.4 3h-3.2L9 4.5Z"/>
+            <path d="M10.4 7.5C6.5 9.2 4.5 12.4 4.5 15.6c0 2.7 2 4.4 5 4.4h5c3 0 5-1.7 5-4.4 0-3.2-2-6.4-5.9-8.1"/>
+            <path d="M13.6 11.6c-.3-.6-.9-.9-1.6-.9-.9 0-1.6.5-1.6 1.2 0 1.7 3.3.9 3.3 2.7 0 .7-.7 1.2-1.7 1.2-.8 0-1.4-.3-1.7-.9M12 9.9v.8m0 5.2v.8"/>
+            @break
         @case('chat')
             <path d="M4 5h16v11H9l-5 4V5Z" fill="currentColor" stroke="none"/>
             @break
