@@ -176,3 +176,154 @@
         transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 }
+
+/* ===================================================================
+ | Motion
+ | - [data-reveal] elements fade/slide in when they scroll into view (JS adds .is-visible).
+ |   Variants: up (default) | left | right | zoom | rise (photos coming up from below).
+ |   Stagger with style="--d: 120ms". Hidden state only applies once JS is running (html.js).
+ | - .float-*: gentle idle bobbing for floating UI cards (animates `translate`, so it composes
+ |   with the reveal's `transform` and with Tailwind's translate utilities).
+ | - Everything is disabled for prefers-reduced-motion.
+ * =================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+    .js [data-reveal] {
+        opacity: 0;
+        transform: translate3d(0, 28px, 0);
+        transition:
+            opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms),
+            transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+    }
+    .js [data-reveal='left'] { transform: translate3d(-40px, 0, 0); }
+    .js [data-reveal='right'] { transform: translate3d(40px, 0, 0); }
+    .js [data-reveal='zoom'] { transform: scale(0.85); }
+    .js [data-reveal='rise'] { transform: translate3d(0, 60px, 0); }
+    .js [data-reveal].is-visible {
+        opacity: 1;
+        transform: none;
+        /* keep hover colour fades (e.g. service cards) working after the reveal */
+        transition:
+            opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms),
+            transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms),
+            background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Monthly-report bars grow up one after another */
+    .js [data-bars] > * { transform: scaleY(0); transform-origin: bottom; transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s; }
+    .js [data-bars] > :nth-child(2) { transition-delay: 0.58s; }
+    .js [data-bars] > :nth-child(3) { transition-delay: 0.66s; }
+    .js [data-bars] > :nth-child(4) { transition-delay: 0.74s; }
+    .js [data-bars] > :nth-child(5) { transition-delay: 0.82s; }
+    .js [data-bars] > :nth-child(6) { transition-delay: 0.9s; }
+    .js [data-bars].is-visible > * { transform: none; }
+
+    /* Map routes draw themselves, nodes pulse */
+    .js [data-draw] path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s cubic-bezier(0.45, 0, 0.2, 1); }
+    .js [data-draw] path:nth-child(odd) { transition-delay: 0.25s; }
+    .js [data-draw] path:nth-child(3n) { transition-delay: 0.5s; }
+    .js [data-draw].is-visible path { stroke-dashoffset: 0; }
+    .map-pulse { transform-box: fill-box; transform-origin: center; animation: map-pulse 2.8s ease-out infinite; }
+
+    .float-a { animation: float 6s ease-in-out infinite; }
+    .float-b { animation: float 7s ease-in-out -2s infinite; }
+    .float-c { animation: float 5.5s ease-in-out -4s infinite; }
+
+    /* Lime buttons: a light sweep on hover */
+    .btn-shine { position: relative; overflow: hidden; isolation: isolate; }
+    .btn-shine::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.65) 50%, transparent 70%);
+        transform: translateX(-120%);
+        transition: transform 0.7s ease;
+    }
+    .btn-shine:hover::after { transform: translateX(120%); }
+}
+
+@keyframes float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -8px; }
+}
+
+@keyframes map-pulse {
+    0% { transform: scale(1); opacity: 0.55; }
+    80%, 100% { transform: scale(3.2); opacity: 0; }
+}
+
+/* Thin reading-progress bar at the top of the page */
+.scroll-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 60;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-brand-400), var(--color-lime));
+    transform-origin: left;
+    transform: scaleX(var(--progress, 0));
+    pointer-events: none;
+}
+
+/* Service cards: soft spotlight that follows the cursor */
+.spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.25), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.spotlight:hover::before { opacity: 1; }
+
+/* Coast-to-coast map pins: hover (mouse), keyboard focus or tap (.is-active) grows the pin from its tip,
+   makes the bubble glow lime and lifts it above its neighbours (JS moves it to the end of the group). */
+.map-pin {
+    outline: none;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.35s ease;
+}
+.map-pin-bubble {
+    fill: #fff;
+    fill-opacity: 0.12;
+    stroke: #fff;
+    stroke-opacity: 0.22;
+    transition: fill 0.3s, fill-opacity 0.3s, stroke 0.3s, stroke-opacity 0.3s, stroke-width 0.3s;
+}
+.map-pin.is-active,
+.map-pin:focus-visible {
+    transform: scale(1.25);
+    filter: drop-shadow(0 0 12px rgb(209 254 103 / 0.6)) drop-shadow(0 8px 16px rgb(0 0 0 / 0.35));
+}
+.map-pin.is-active .map-pin-bubble,
+.map-pin:focus-visible .map-pin-bubble {
+    fill: #d1fe67;
+    fill-opacity: 0.22;
+    stroke: #d1fe67;
+    stroke-opacity: 1;
+    stroke-width: 1.5;
+}
+@media (hover: hover) {
+    .map-pin:hover {
+        transform: scale(1.25);
+        filter: drop-shadow(0 0 12px rgb(209 254 103 / 0.6)) drop-shadow(0 8px 16px rgb(0 0 0 / 0.35));
+    }
+    .map-pin:hover .map-pin-bubble {
+        fill: #d1fe67;
+        fill-opacity: 0.22;
+        stroke: #d1fe67;
+        stroke-opacity: 1;
+        stroke-width: 1.5;
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    /* the active (tapped/selected) pin keeps breathing softly */
+    .map-pin.is-active { animation: pin-glow 1.8s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .map-pin { transition: none; }
+}
+@keyframes pin-glow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgb(209 254 103 / 0.45)) drop-shadow(0 8px 16px rgb(0 0 0 / 0.35)); }
+    50% { filter: drop-shadow(0 0 18px rgb(209 254 103 / 0.85)) drop-shadow(0 8px 16px rgb(0 0 0 / 0.35)); }
+}

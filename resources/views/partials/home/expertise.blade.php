@@ -21,7 +21,7 @@
 <section id="expertise" class="hero-scale relative scroll-mt-8 max-lg:py-20 lg:h-562" aria-labelledby="expertise-title">
     <div class="relative mx-auto max-lg:px-4 sm:max-lg:px-6 lg:h-full lg:w-698">
         {{-- Copy --}}
-        <div class="lg:absolute lg:top-121 lg:left-27 lg:w-306.5">
+        <div data-reveal="left" class="lg:absolute lg:top-121 lg:left-27 lg:w-306.5">
             <h2 id="expertise-title" class="font-semibold max-lg:text-3xl max-lg:leading-[1.2] max-lg:tracking-tight sm:max-lg:text-4xl lg:fs-26 lg:leading-[1.346]">
                 <span class="block text-[#35b8c2]">Powered By</span>
                 <span class="block text-ink">Dedicated Expertise</span>
@@ -51,38 +51,38 @@
         </div>
 
         {{-- Photo card --}}
-        <div class="@container relative aspect-[298.5/376.5] max-lg:mx-auto max-lg:mt-14 max-lg:w-full max-lg:max-w-[480px] lg:absolute lg:top-90 lg:left-354 lg:w-298.5">
+        <div data-reveal="right" style="--d: 120ms" class="@container relative aspect-[298.5/376.5] max-lg:mx-auto max-lg:mt-14 max-lg:w-full max-lg:max-w-[480px] lg:absolute lg:top-90 lg:left-354 lg:w-298.5">
             <div class="absolute inset-0 [--spacing:calc(100cqw/298.5)]">
                 <img src="{{ asset('images/expertise-team.jpg') }}" alt="Two Urit colleagues reviewing a closing together on a laptop"
                      width="1192" height="1504" loading="lazy"
                      class="absolute inset-0 size-full object-cover radius-30.5">
 
                 {{-- Kenneth Allen chip + white cursor --}}
-                <div class="absolute top-200.25 left-51 flex h-31.5 w-86 items-center gap-4.5 rounded-full bg-white pl-4.5 shadow-[0_8px_20px_-8px_rgb(0_0_0/0.25)]">
+                <div class="float-a absolute top-200.25 left-51 flex h-31.5 w-86 items-center gap-4.5 rounded-full bg-white pl-4.5 shadow-[0_8px_20px_-8px_rgb(0_0_0/0.25)]">
                     <img src="{{ asset('images/avatar-kenneth.jpg') }}" alt="" width="96" height="96" class="size-23.5 shrink-0 rounded-full object-cover">
                     <span class="leading-tight">
                         <span class="block font-semibold text-ink fs-6.75">Kenneth Allen</span>
                         <span class="mt-1 block text-[#9b9b9b] fs-5.75">Online</span>
                     </span>
                 </div>
-                <svg class="absolute top-232.5 left-135 h-9.5 w-10" viewBox="0 0 20 19" aria-hidden="true">
+                <svg class="float-a absolute top-232.5 left-135 h-9.5 w-10" viewBox="0 0 20 19" aria-hidden="true">
                     <path d="M1 8.6 14.6 1.2c.8-.4 1.6.3 1.4 1.1l-3.6 14.9c-.2.9-1.4 1-1.8.2L8.3 11 2 10.4c-1-.1-1.3-1.3-1-1.8Z" fill="#fff"/>
                 </svg>
 
                 {{-- James Hall chip + lime cursor --}}
-                <div class="absolute top-186.25 left-173.75 flex h-31 w-86 items-center gap-4.5 rounded-full bg-[#c9f562] pl-4 shadow-[0_8px_20px_-8px_rgb(0_0_0/0.25)]">
+                <div class="float-b absolute top-186.25 left-173.75 flex h-31 w-86 items-center gap-4.5 rounded-full bg-[#c9f562] pl-4 shadow-[0_8px_20px_-8px_rgb(0_0_0/0.25)]">
                     <img src="{{ asset('images/avatar-james.jpg') }}" alt="" width="96" height="96" class="size-24 shrink-0 rounded-full object-cover">
                     <span class="leading-tight">
                         <span class="block font-semibold text-ink fs-6.75">James Hall</span>
                         <span class="mt-1 block text-ink/45 fs-5.75">Online</span>
                     </span>
                 </div>
-                <svg class="absolute top-216.75 left-166 h-10.5 w-11" viewBox="0 0 22 21" aria-hidden="true">
+                <svg class="float-b absolute top-216.75 left-166 h-10.5 w-11" viewBox="0 0 22 21" aria-hidden="true">
                     <path d="M1.4 19.6 5.2 1.8c.2-.9 1.3-1.1 1.8-.4l3.6 5.4 9.8 3.9c.9.4.8 1.6-.1 1.9L2.6 20.9c-.7.2-1.4-.5-1.2-1.3Z" fill="#c9f562"/>
                 </svg>
 
                 {{-- Tools pill --}}
-                <ul class="absolute top-349.5 left-83.5 flex h-55 w-152.25 items-center justify-center gap-9 rounded-full bg-white shadow-[0_18px_40px_-12px_rgb(16_40_40/0.22)]"
+                <ul class="float-c absolute top-349.5 left-83.5 flex h-55 w-152.25 items-center justify-center gap-9 rounded-full bg-white shadow-[0_18px_40px_-12px_rgb(16_40_40/0.22)]"
                     aria-label="Works with your tools">
                     @foreach ($tools as $tool)
                         <li class="grid size-39 place-items-center rounded-full bg-white shadow-[0_4px_14px_-2px_rgb(16_40_40/0.12)]">

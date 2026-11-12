@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="@yield('description', 'Urit — modern title, escrow and closing services.')">
 
+    {{-- Lets CSS hide [data-reveal] elements only when the script that reveals them can run --}}
+    <script>document.documentElement.classList.add('js')</script>
+
     <title>@yield('title', config('app.name', 'Urit'))</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,6 +20,8 @@
        class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-lime focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-ink">
         Skip to content
     </a>
+
+    <div class="scroll-progress" aria-hidden="true" data-scroll-progress></div>
 
     @yield('content')
 </body>

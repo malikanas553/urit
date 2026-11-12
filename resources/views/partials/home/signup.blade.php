@@ -6,7 +6,7 @@
 <section class="hero-scale on-dark max-lg:bg-[linear-gradient(to_bottom,var(--color-page)_50%,var(--color-ink-soft)_50%)] max-lg:pt-16 lg:pt-40 lg:bg-[linear-gradient(to_bottom,var(--color-page)_calc(var(--spacing)*153.75),var(--color-ink-soft)_0)]"
          aria-labelledby="signup-title">
     <div class="relative mx-auto max-lg:px-4 sm:max-lg:px-6 lg:w-698">
-        <div class="bg-signup relative text-white shadow-float max-lg:grid max-lg:gap-8 max-lg:rounded-[2rem] max-lg:px-6 max-lg:py-10 sm:max-lg:px-10 lg:ml-28.5 lg:h-182.75 lg:w-640.5 lg:radius-24">
+        <div data-reveal class="bg-signup relative text-white shadow-float max-lg:grid max-lg:gap-8 max-lg:rounded-[2rem] max-lg:px-6 max-lg:py-10 sm:max-lg:px-10 lg:ml-28.5 lg:h-182.75 lg:w-640.5 lg:radius-24">
             <h2 id="signup-title" class="font-semibold max-lg:text-3xl max-lg:leading-tight sm:max-lg:text-4xl lg:absolute lg:top-50 lg:left-33.5 lg:fs-29 lg:leading-[1.43] lg:[word-spacing:calc(var(--spacing)*2.5)]">
                 Sign Up For
                 <span class="block">Special Offer</span>
@@ -15,7 +15,7 @@
             {{-- Photo: sharpened cut-out from the design, stands on the card's bottom edge --}}
             <img src="{{ asset('images/signup-woman.png') }}" alt="Smiling Urit advisor pointing at you"
                  width="736" height="816" loading="lazy"
-                 class="pointer-events-none max-lg:hidden lg:absolute lg:bottom-0 lg:left-228.25 lg:w-184.25">
+                 data-reveal="rise" style="--d: 250ms" class="pointer-events-none max-lg:hidden lg:absolute lg:bottom-0 lg:left-228.25 lg:w-184.25">
 
             <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-230">
                 <p class="text-white/90 max-lg:max-w-sm max-lg:text-sm max-lg:leading-relaxed lg:absolute lg:top-53 lg:right-32.5 lg:w-185 lg:text-right lg:fs-8.5 lg:leading-[1.7]">
@@ -28,7 +28,7 @@
                            placeholder="Enter Your Email"
                            class="h-full min-w-0 flex-1 bg-transparent text-white placeholder:text-white/45 focus:outline-none max-lg:px-5 max-lg:py-3 max-lg:text-sm lg:pl-12 lg:fs-8">
                     <button type="submit"
-                            class="shrink-0 rounded-full bg-lime font-semibold whitespace-nowrap text-ink transition hover:bg-lime-dark max-lg:px-9 max-lg:py-3.5 max-lg:text-sm lg:h-full lg:w-77 lg:fs-7.5">
+                            class="btn-shine shrink-0 rounded-full bg-lime font-semibold whitespace-nowrap text-ink transition hover:bg-lime-dark max-lg:px-9 max-lg:py-3.5 max-lg:text-sm lg:h-full lg:w-77 lg:fs-7.5">
                         Get Started
                     </button>
                     <p class="hidden text-xs text-lime max-lg:px-5 max-lg:pb-2 sm:basis-full lg:absolute lg:top-full lg:left-12 lg:mt-2 lg:fs-6" role="alert" data-email-error></p>

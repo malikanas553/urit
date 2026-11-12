@@ -8,7 +8,7 @@
 @endphp
 
 <footer class="on-dark bg-ink-soft text-white">
-    <div class="container-page grid gap-12 pb-14 pt-16 lg:grid-cols-[1fr_1.4fr] lg:pt-20">
+    <div data-reveal class="container-page grid gap-12 pb-14 pt-16 lg:grid-cols-[1fr_1.4fr] lg:pt-20">
         <div>
             <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 rounded-full text-xl font-bold tracking-tight">
                 <span class="grid size-9 place-items-center rounded-full bg-white text-ink">

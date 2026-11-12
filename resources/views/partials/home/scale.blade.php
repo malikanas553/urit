@@ -20,7 +20,7 @@
 --}}
 <section id="scale" class="hero-scale relative scroll-mt-8 max-lg:py-16 lg:-mt-19 lg:h-605" aria-labelledby="scale-title">
     <div class="relative mx-auto max-lg:px-4 sm:max-lg:px-6 lg:h-full lg:w-698">
-        <div class="text-center lg:absolute lg:inset-x-0 lg:top-47.5">
+        <div data-reveal class="text-center lg:absolute lg:inset-x-0 lg:top-47.5">
             <h2 id="scale-title" class="font-semibold text-ink max-lg:text-3xl max-lg:tracking-tight sm:max-lg:text-4xl lg:fs-26 lg:leading-[1.2]">Built for scale &amp; efficiency</h2>
             <p class="mx-auto text-[#8f8f8f] max-lg:mt-4 max-lg:max-w-sm max-lg:text-sm max-lg:leading-relaxed lg:mt-16 lg:w-242 lg:fs-9 lg:leading-[1.61]">
                 Whether you're handling individual transactions or 1,000, simplicity is key. We've built a frictionless
@@ -28,7 +28,7 @@
         </div>
 
         {{-- Photo group --}}
-        <div class="@container relative aspect-[319/388.6] max-lg:mx-auto max-lg:mt-12 max-lg:w-full max-lg:max-w-[480px] lg:absolute lg:top-158.75 lg:left-28.5 lg:w-319">
+        <div data-reveal="zoom" class="@container relative aspect-[319/388.6] max-lg:mx-auto max-lg:mt-12 max-lg:w-full max-lg:max-w-[480px] lg:absolute lg:top-158.75 lg:left-28.5 lg:w-319">
             <div class="absolute inset-0 [--spacing:calc(100cqw/319)]">
                 {{-- Teal card: background plate, glass cards, then the man in front of them --}}
                 <div class="absolute top-0 left-27.5 h-355.5 w-268 overflow-hidden radius-33">
@@ -46,7 +46,7 @@
                         </span>
                     </div>
 
-                    <div class="glass absolute top-65.5 left-37.5 h-55 w-191.25 radius-10">
+                    <div class="float-a glass absolute top-65.5 left-37.5 h-55 w-191.25 radius-10">
                         <span class="absolute top-1/2 left-10 grid size-27 -translate-y-1/2 place-items-center rounded-full bg-[#232323] text-lime">
                             <x-icon name="wallet" class="size-14" />
                         </span>
@@ -61,7 +61,7 @@
                 </div>
 
                 {{-- Calculator controls --}}
-                <div class="absolute top-51.5 left-0 flex h-126.25 w-48 flex-col items-center justify-center gap-8 rounded-full bg-white shadow-[0_10px_30px_-8px_rgb(16_40_40/0.18)]"
+                <div class="float-c absolute top-51.5 left-0 flex h-126.25 w-48 flex-col items-center justify-center gap-8 rounded-full bg-white shadow-[0_10px_30px_-8px_rgb(16_40_40/0.18)]"
                      role="group" aria-label="Calculator operations">
                     <button type="button" class="grid size-32 place-items-center rounded-full bg-[linear-gradient(180deg,#4b4b4b,#262626)] text-white transition hover:brightness-125" aria-label="Divide">
                         <x-icon name="divide" class="size-14" />
@@ -75,7 +75,7 @@
                 </div>
 
                 {{-- Detail investment card --}}
-                <div class="absolute top-242 left-195.25 z-10 h-146.75 w-123.75 bg-white radius-11 shadow-[0_18px_40px_-14px_rgb(16_40_40/0.22)]">
+                <div class="float-b absolute top-242 left-195.25 z-10 h-146.75 w-123.75 bg-white radius-11 shadow-[0_18px_40px_-14px_rgb(16_40_40/0.22)]">
                     <h3 class="pt-15 text-center leading-none font-semibold text-ink fs-6.25">Detail Investment</h3>
 
                     <dl class="relative mx-10 mt-8.75 h-62.5 bg-[#f6f6f6] radius-5">
@@ -114,7 +114,7 @@
             {{-- Each item's "Learn More" stays collapsed and slides open on hover (or keyboard focus).
                  Devices without hover (touch screens) always show it. --}}
             @foreach ($features as $i => $feature)
-                <li @class([
+                <li data-reveal="right" style="--d: {{ $i * 150 }}ms" @class([
                     'group flex border-[#ececec] max-lg:gap-5 max-lg:py-7 lg:gap-14 lg:pb-24.75',
                     'border-t' => $i > 0,
                     'max-lg:pt-0' => $i === 0,

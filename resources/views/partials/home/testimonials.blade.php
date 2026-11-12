@@ -14,15 +14,15 @@
 
 <section id="testimonials" class="scroll-mt-8 overflow-hidden pb-24 pt-6 lg:pb-36" aria-labelledby="testimonials-title">
     <div class="container-page">
-        <div class="text-center">
+        <div data-reveal class="text-center">
             <x-section-heading id="testimonials-title" accent="What They" title="Saying About Us" align="center" />
             <p class="mx-auto mt-5 max-w-56 text-sm leading-relaxed text-muted">Join with another customer and client satisfied with our service</p>
         </div>
     </div>
 
-    <div class="mt-14 lg:mt-16" data-carousel data-start="{{ $start }}"
+    <div data-reveal style="--d: 150ms" class="mt-14 lg:mt-16" data-carousel data-start="{{ $start }}"
          role="region" aria-roledescription="carousel" aria-label="Customer testimonials">
-        <ul class="flex gap-6 py-6 lg:gap-8" data-carousel-track>
+        <ul class="flex cursor-grab gap-6 py-6 select-none active:cursor-grabbing lg:gap-8" data-carousel-track>
             @foreach ($testimonials as $i => $t)
                 <li class="w-[calc(100vw-2rem)] shrink-0 cursor-pointer transition-opacity duration-500 aria-hidden:opacity-50 sm:w-[min(57rem,calc(100vw-6rem))]"
                     aria-roledescription="slide" aria-label="{{ $i + 1 }} of {{ count($testimonials) }}"
