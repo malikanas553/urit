@@ -7,28 +7,29 @@
     ];
 @endphp
 
-<header class="on-dark absolute inset-x-0 top-0 z-30 text-white">
-    <div class="container-page flex h-20 items-center justify-between gap-6 lg:h-24">
-        <a href="{{ route('home') }}" class="flex items-center gap-2.5 rounded-full text-xl font-bold tracking-tight">
-            <span class="grid size-9 place-items-center rounded-full bg-lime text-ink">
-                <x-icon name="bolt" class="size-5" />
+{{-- Desktop sizes are design units (see .hero-scale in app.css); mobile spacing uses max-lg:. --}}
+<header class="hero-scale on-dark absolute inset-x-0 top-0 z-30 text-white">
+    <div class="relative mx-auto flex items-center justify-between max-lg:h-20 max-sm:px-4 sm:max-lg:px-6 lg:h-46 lg:w-698 lg:pl-19 lg:pr-39">
+        <a href="{{ route('home') }}" class="flex items-center rounded-full font-bold tracking-tight max-lg:gap-2.5 max-lg:text-xl lg:gap-8 lg:fs-15">
+            <span class="grid place-items-center rounded-full bg-ink-soft text-lime max-lg:size-9 lg:size-24">
+                <x-icon name="bolt" class="max-lg:size-5 lg:size-13" />
             </span>
             Urit
         </a>
 
-        <nav aria-label="Primary" class="hidden md:block">
-            <ul class="flex items-center gap-10 text-sm font-medium text-white/85">
+        <nav aria-label="Primary" class="hidden md:block lg:absolute lg:top-1/2 lg:left-225.5 lg:-translate-y-1/2">
+            <ul class="flex items-center font-normal text-white/90 md:max-lg:gap-8 md:max-lg:text-sm lg:gap-24.5 lg:fs-9">
                 @foreach ($navLinks as $link)
                     <li><a href="{{ $link['href'] }}" class="rounded transition hover:text-lime">{{ $link['label'] }}</a></li>
                 @endforeach
             </ul>
         </nav>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center max-lg:gap-3">
             <a href="#"
-               class="inline-flex items-center gap-2.5 rounded-full bg-ink/80 py-1.5 pl-1.5 pr-5 text-xs font-semibold ring-2 ring-lime transition hover:bg-ink">
-                <span class="grid size-7 place-items-center rounded-full bg-lime text-ink">
-                    <x-icon name="user" class="size-3.5" />
+               class="inline-flex items-center rounded-full bg-ink-soft font-semibold text-lime transition hover:bg-ink max-lg:gap-2.5 max-lg:py-1.5 max-lg:pl-1.5 max-lg:pr-5 max-lg:text-xs lg:h-26 lg:gap-7.5 lg:pl-3 lg:pr-12.5 lg:fs-7.75">
+                <span class="grid place-items-center rounded-full bg-lime text-ink max-lg:size-7 lg:size-20">
+                    <x-icon name="user" class="max-lg:size-3.5 lg:size-10" />
                 </span>
                 Login
             </a>
