@@ -24,6 +24,8 @@
     --color-lime: #d1fe67;
     --color-lime-dark: #bde84f;
 
+    --color-page: #fafafa;
+
     --color-ink: #121414;
     --color-ink-soft: #1c1e1f;
     --color-muted: #8a9099;
@@ -63,7 +65,7 @@
     }
 
     body {
-        @apply bg-[#fafafa] font-sans text-ink antialiased;  /* page background from the design */
+        @apply bg-page font-sans text-ink antialiased;  /* page background from the design */
     }
 
     :focus-visible {
@@ -113,14 +115,38 @@
                 calc(var(--spacing) * 68) calc(var(--spacing) * 68),
                 calc(var(--spacing) * 68) calc(var(--spacing) * 68),
                 100% 100%, 100% 100%, 100% 100%;
-            /* Canvas is centred, first vertical line sits 55 units in */
-            background-position: calc(50cqw - var(--spacing) * 294) 0;
+            /* Canvas is centred, first vertical line sits 55 units in.
+               Only the two grid layers are offset; the full-size gradients stay at 0 0
+               (offsetting them made them repeat as a darker strip on the left). */
+            background-position:
+                calc(50cqw - var(--spacing) * 294) 0,
+                calc(50cqw - var(--spacing) * 294) 0,
+                0 0, 0 0, 0 0;
         }
     }
 
     /* Dark partner-logo band at the foot of the hero */
     .bg-hero-band {
         background: linear-gradient(180deg, #0d585e 0%, #0b4f54 55%, #0a484c 100%);
+    }
+
+    /* Sign-up banner: teal gradient with a faint 66px (33-unit) grid, sampled from the design */
+    .bg-signup {
+        background-color: #1f939c;
+        background-image:
+            linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+            linear-gradient(180deg, #26a2ac 0%, #18838b 100%);
+        background-size: 66px 66px, 66px 66px, 100% 100%;
+    }
+
+    @media (width >= 64rem) {
+        .bg-signup {
+            background-size:
+                calc(var(--spacing) * 33) calc(var(--spacing) * 33),
+                calc(var(--spacing) * 33) calc(var(--spacing) * 33),
+                100% 100%;
+        }
     }
 
     /* Lime "earnings" card in the hero */
