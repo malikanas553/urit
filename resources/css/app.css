@@ -64,6 +64,14 @@
         scroll-behavior: smooth;
     }
 
+    /* Elements waiting to slide in (scroll reveals) start offset sideways; never let that
+       widen the page. `clip` (unlike hidden) doesn't create a scroll container, so vertical
+       scrolling and position: sticky keep working. */
+    html,
+    body {
+        overflow-x: clip;
+    }
+
     body {
         @apply bg-page font-sans text-ink antialiased;  /* page background from the design */
     }
