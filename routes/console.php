@@ -26,6 +26,12 @@ Artisan::command('export:static {--output=dist : Directory to write the static s
 
     File::put("{$out}/index.html", view('home')->render());
 
+    // Auth pages as folders so GitHub Pages serves /login and /register.
+    foreach (['login' => 'auth.login', 'register' => 'auth.register'] as $path => $view) {
+        File::ensureDirectoryExists("{$out}/{$path}");
+        File::put("{$out}/{$path}/index.html", view($view)->render());
+    }
+
     foreach (['build', 'images'] as $dir) {
         File::copyDirectory(public_path($dir), "{$out}/{$dir}");
     }

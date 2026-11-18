@@ -1,4 +1,28 @@
 import './bootstrap';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyApp8_CKfesFCS1zeAzBcqIm0fMfNP1tJE",
+  authDomain: "urit-89286.firebaseapp.com",
+  projectId: "urit-89286",
+  storageBucket: "urit-89286.firebasestorage.app",
+  messagingSenderId: "12126498607",
+  appId: "1:12126498607:web:885838c356418483ca7bda"
+};
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const firebaseAuth = getAuth(firebaseApp);
+const googleProvider = new GoogleAuthProvider();
+
+
+
+
 
 /* ---------------------------------------------------------------
  | Mobile navigation
@@ -314,7 +338,93 @@ function initMapPins() {
     });
 }
 
+/* ---------------------------------------------------------------
+ | Login / register pages — front end only.
+ | Inline validation, password show/hide, and a "not connected yet" notice
+ | for submit and the Google button. Nothing is sent anywhere.
+ * ------------------------------------------------------------- */
+function initAuthForms() {
+    const notice = document.querySelector('[data-auth-notice]');
+    const showNotice = (text) => {
+        if (!notice) return;
+        notice.textContent = text;
+        notice.classList.remove('hidden');
+    };
+
+    document.querySelectorAll('[data-password-toggle]').forEach((btn) => {
+        const input = document.getElementById(btn.getAttribute('aria-controls'));
+        btn.addEventListener('click', () => {
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.setAttribute('aria-pressed', String(show));
+            btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+            btn.querySelector('[data-eye-show]')?.classList.toggle('hidden', show);
+            btn.querySelector('[data-eye-hide]')?.classList.toggle('hidden', !show);
+        });
+    });
+
+    document.querySelectorAll('[data-auth-stub]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            // TODO: hook up Google OAuth / password reset once the backend exists.
+            showNotice("Sign-in isn't connected yet — this page is a preview.");
+        });
+    });
+
+    document.querySelectorAll('[data-auth-form]').forEach((form) => {
+        const fields = [...form.querySelectorAll('input')].filter((i) => i.name !== 'remember');
+
+        const messageFor = (input) => {
+            const v = input.validity;
+            if (input.type === 'checkbox') return v.valueMissing ? 'Please accept the terms to continue.' : '';
+            if (v.valueMissing) return 'This field is required.';
+            if (v.typeMismatch) return 'Please enter a valid email address.';
+            if (input.minLength > 0 && input.value.length < input.minLength) return `Use at least ${input.minLength} characters.`;
+            if (input.dataset.match) {
+                const other = form.querySelector(`[name="${input.dataset.match}"]`);
+                if (other && other.value !== input.value) return "Passwords don't match.";
+            }
+            return '';
+        };
+
+        const check = (input) => {
+            const msg = messageFor(input);
+            const error = document.getElementById(input.getAttribute('aria-describedby'));
+            if (msg) input.setAttribute('aria-invalid', 'true');
+            else input.removeAttribute('aria-invalid');
+            if (error) {
+                error.textContent = msg;
+                error.classList.toggle('hidden', !msg);
+            }
+            return !msg;
+        };
+
+        // Re-check a field once it has shown an error, so the message clears as you fix it.
+        fields.forEach((input) => {
+            const evt = input.type === 'checkbox' ? 'change' : 'input';
+            input.addEventListener(evt, () => {
+                if (input.hasAttribute('aria-invalid')) check(input);
+            });
+        });
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const results = fields.map(check);
+            const firstBad = fields[results.indexOf(false)];
+            if (firstBad) {
+                firstBad.focus();
+                return;
+            }
+            // TODO: POST to the real login / register endpoint once the backend exists.
+            showNotice("Looks good! Sign-in isn't connected yet — this page is a preview.");
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initAuthForms();
+    initGoogleSignIn();
+    initWelcomeToast();
     initMapPins();
     initMotion();
     initScrollProgress();
@@ -323,3 +433,65 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-carousel]').forEach(initCarousel);
     initEmailForms();
 });
+
+
+/* ---------------------------------------------------------------
+ | Google sign-in (Firebase popup) → remember the name → go home,
+ | where a one-time "Welcome, {name}" toast greets the user.
+ * ------------------------------------------------------------- */
+const WELCOME_KEY = 'urit:welcome';
+
+function initGoogleSignIn() {
+    const notice = document.querySelector('[data-auth-notice]');
+    document.querySelectorAll('[data-google-signin]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            try {
+                const { user } = await signInWithPopup(firebaseAuth, googleProvider);
+                const name = user.displayName || user.email?.split('@')[0] || 'there';
+                try { sessionStorage.setItem(WELCOME_KEY, name); } catch {}
+                window.location.href = btn.dataset.homeUrl || '/';
+            } catch (error) {
+                if (['auth/popup-closed-by-user', 'auth/cancelled-popup-request'].includes(error?.code)) return;
+                console.error(error);
+                if (notice) {
+                    notice.textContent = 'Google sign-in failed, please try again.';
+                    notice.classList.remove('hidden');
+                }
+            }
+        });
+    });
+}
+
+function initWelcomeToast() {
+    let name = null;
+    try {
+        name = sessionStorage.getItem(WELCOME_KEY);
+        sessionStorage.removeItem(WELCOME_KEY);
+    } catch {}
+    if (!name) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'welcome-toast';
+    toast.setAttribute('role', 'status');
+    toast.innerHTML = `
+        <span class="welcome-toast__dot" aria-hidden="true"></span>
+        <div class="min-w-0 flex-1">
+            <p class="font-semibold text-ink">👋 Welcome, <span data-name></span>!</p>
+            <p class="mt-0.5 text-sm text-muted">You're signed in with Google.</p>
+        </div>
+        <button type="button" class="welcome-toast__close" aria-label="Dismiss">&times;</button>`;
+    toast.querySelector('[data-name]').textContent = name;
+    document.body.appendChild(toast);
+
+    let timer;
+    const hide = () => {
+        toast.classList.remove('is-open');
+        setTimeout(() => toast.remove(), 400);
+    };
+    const arm = () => { timer = setTimeout(hide, 6000); };
+    toast.querySelector('button').addEventListener('click', hide);
+    toast.addEventListener('mouseenter', () => clearTimeout(timer));
+    toast.addEventListener('mouseleave', arm);
+    requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('is-open')));
+    arm();
+}
