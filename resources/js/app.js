@@ -1,7 +1,7 @@
 import './bootstrap';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -425,6 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAuthForms();
     initGoogleSignIn();
     initWelcomeToast();
+    initAuthPill();
     initMapPins();
     initMotion();
     initScrollProgress();
@@ -494,4 +495,26 @@ function initWelcomeToast() {
     toast.addEventListener('mouseleave', arm);
     requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('is-open')));
     arm();
+}
+
+/* Header: once signed in with Google, swap "Login" for first name + profile photo. */
+function initAuthPill() {
+    const pill = document.querySelector('[data-auth-pill]');
+    if (!pill) return;
+    onAuthStateChanged(firebaseAuth, (user) => {
+        if (!user) return;
+        const first = (user.displayName || user.email?.split('@')[0] || 'Account').trim().split(/\s+/)[0];
+        pill.querySelector('[data-auth-label]').textContent = first;
+        pill.removeAttribute('href');
+        pill.setAttribute('title', `Signed in as ${user.displayName || user.email || first}`);
+        if (user.photoURL) {
+            const img = document.createElement('img');
+            img.src = user.photoURL;
+            img.alt = '';
+            img.referrerPolicy = 'no-referrer';
+            img.className = 'size-full object-cover';
+            img.onerror = () => img.remove();
+            pill.querySelector('[data-auth-avatar]').replaceChildren(img);
+        }
+    });
 }

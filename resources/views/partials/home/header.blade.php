@@ -26,12 +26,12 @@
         </nav>
 
         <div class="flex items-center max-lg:gap-3">
-            <a href="{{ route('login') }}"
+            <a href="{{ route('login') }}" data-auth-pill
                class="inline-flex items-center rounded-full bg-ink-soft font-semibold text-lime transition hover:bg-ink max-lg:gap-2.5 max-lg:py-1.5 max-lg:pl-1.5 max-lg:pr-5 max-lg:text-xs lg:h-26 lg:gap-7.5 lg:pl-3 lg:pr-12.5 lg:fs-7.75">
-                <span class="grid place-items-center rounded-full bg-lime text-ink max-lg:size-7 lg:size-20">
+                <span class="grid place-items-center overflow-hidden rounded-full bg-lime text-ink max-lg:size-7 lg:size-20" data-auth-avatar>
                     <x-icon name="user" class="max-lg:size-3.5 lg:size-10" />
                 </span>
-                Login
+                <span data-auth-label>Login</span>
             </a>
 
             <button type="button"
