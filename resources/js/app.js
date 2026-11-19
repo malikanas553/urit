@@ -1,7 +1,7 @@
 import './bootstrap';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -497,15 +497,65 @@ function initWelcomeToast() {
     arm();
 }
 
-/* Header: once signed in with Google, swap "Login" for first name + profile photo. */
+/* Header: once signed in with Google, swap "Login" for first name + profile photo.
+   Clicking the pill opens a small menu with "Log out". */
 function initAuthPill() {
     const pill = document.querySelector('[data-auth-pill]');
     if (!pill) return;
+    const label = pill.querySelector('[data-auth-label]');
+    const avatar = pill.querySelector('[data-auth-avatar]');
+    const original = { href: pill.getAttribute('href'), label: label.textContent, avatar: avatar.innerHTML };
+
+    // Wrap the pill so the menu can sit right under it.
+    const wrap = document.createElement('div');
+    wrap.className = 'relative';
+    pill.replaceWith(wrap);
+    wrap.appendChild(pill);
+
+    const menu = document.createElement('div');
+    menu.className = 'auth-menu';
+    menu.hidden = true;
+    menu.innerHTML = '<button type="button" class="auth-menu__item" data-logout>Log out</button>';
+    wrap.appendChild(menu);
+
+    let signedIn = false;
+    const setOpen = (open) => {
+        menu.hidden = !open;
+        pill.setAttribute('aria-expanded', String(open));
+    };
+
+    pill.addEventListener('click', (e) => {
+        if (!signedIn) return; // signed out: normal link to /login
+        e.preventDefault();
+        setOpen(menu.hidden);
+    });
+    document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
+    menu.querySelector('[data-logout]').addEventListener('click', async () => {
+        try { await signOut(firebaseAuth); } catch (err) { console.error(err); }
+        setOpen(false);
+    });
+
     onAuthStateChanged(firebaseAuth, (user) => {
-        if (!user) return;
+        signedIn = !!user;
+        if (!user) {
+            pill.setAttribute('href', original.href);
+            pill.removeAttribute('title');
+            pill.removeAttribute('role');
+            pill.removeAttribute('aria-haspopup');
+            pill.removeAttribute('aria-expanded');
+            label.textContent = original.label;
+            avatar.innerHTML = original.avatar;
+            menu.hidden = true;
+            return;
+        }
         const first = (user.displayName || user.email?.split('@')[0] || 'Account').trim().split(/\s+/)[0];
-        pill.querySelector('[data-auth-label]').textContent = first;
-        pill.removeAttribute('href');
+        label.textContent = first;
+        pill.setAttribute('href', '#');
+        pill.setAttribute('role', 'button');
+        pill.setAttribute('aria-haspopup', 'menu');
+        pill.setAttribute('aria-expanded', 'false');
         pill.setAttribute('title', `Signed in as ${user.displayName || user.email || first}`);
         if (user.photoURL) {
             const img = document.createElement('img');
@@ -513,8 +563,8 @@ function initAuthPill() {
             img.alt = '';
             img.referrerPolicy = 'no-referrer';
             img.className = 'size-full object-cover';
-            img.onerror = () => img.remove();
-            pill.querySelector('[data-auth-avatar]').replaceChildren(img);
+            img.onerror = () => { avatar.innerHTML = original.avatar; };
+            avatar.replaceChildren(img);
         }
     });
 }

@@ -353,3 +353,21 @@
 .welcome-toast__close:hover { background: color-mix(in srgb, var(--color-line) 60%, transparent); color: var(--color-ink); }
 @media (max-width: 639px) { .welcome-toast { top: 5rem; right: 1rem; left: 1rem; width: auto; } }
 @media (prefers-reduced-motion: reduce) { .welcome-toast { transition: none; transform: none; } }
+
+/* Signed-in header menu */
+.auth-menu {
+    position: absolute; z-index: 60; top: calc(100% + .5rem); right: 0;
+    min-width: 100%; padding: .375rem; border-radius: 1rem;
+    background: #fff; border: 1px solid var(--color-line);
+    box-shadow: 0 20px 50px -20px rgb(16 40 40 / .35);
+    animation: auth-menu-in .18s ease-out;
+}
+.auth-menu[hidden] { display: none; }
+.auth-menu__item {
+    display: block; width: 100%; white-space: nowrap; text-align: left;
+    padding: .625rem 1rem; border-radius: .75rem;
+    font-size: .875rem; font-weight: 600; color: var(--color-ink); transition: background .15s;
+}
+.auth-menu__item:hover, .auth-menu__item:focus-visible { background: color-mix(in srgb, var(--color-lime) 35%, transparent); outline: none; }
+@keyframes auth-menu-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .auth-menu { animation: none; } }
